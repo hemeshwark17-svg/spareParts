@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Spare Parts Catalogue{% endblock %}{% block content %}
+<section class="hero"><div class="eyebrow">VEHICLE SPARE PARTS INVENTORY</div><h1>Find the right part.<br><span>Keep moving.</span></h1>
+<p>Browse our demo catalogue, search parts and check current stock availability.</p>
+<form class="search" method="get"><input name="q" value="{{ q }}" placeholder="Search part name, number or vehicle..." aria-label="Search">
+<select name="category" aria-label="Category"><option value="">All categories</option>{% for c in categories %}<option value="{{ c }}" {% if selected==c %}selected{% endif %}>{{ c }}</option>{% endfor %}</select><button>Search</button></form></section>
+<div class="section-head"><div><div class="eyebrow">OUR CATALOGUE</div><h2>Available spare parts</h2></div><span class="count">{{ parts|length }} items</span></div>
+{% if parts %}<div class="grid">{% for p in parts %}<article class="card"><div class="part-art"><span>{{ p.category[:1]|upper }}</span><small>{{ p.category }}</small></div><div class="card-body"><div class="sku">{{ p.part_number }}</div><h3>{{ p.part_name }}</h3><p class="muted">{{ p.vehicle_compatibility }}</p><div class="price-row"><strong>₹{{ "%.2f"|format(p.price) }}</strong><span class="{{ 'stock' if p.stock_quantity>0 else 'out' }}">{% if p.stock_quantity>0 %}{{ p.stock_quantity }} in stock{% else %}Out of stock{% endif %}</span></div><a class="detail-link" href="{{ url_for('detail',part_id=p.part_id) }}">View details ↗</a></div></article>{% endfor %}</div>
+{% else %}<div class="empty"><h3>No matching parts</h3><p>Try another search or category.</p><a class="button secondary" href="{{ url_for('home') }}">Clear filters</a></div>{% endif %}{% endblock %}

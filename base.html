@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}AutoStock{% endblock %} | AutoStock</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body><header class="topbar"><a class="brand" href="{{ url_for('home') }}"><span class="logo">A</span> AutoStock</a>
+<nav><a href="{{ url_for('home') }}">Catalogue</a><a href="{{ url_for('login') }}">Admin</a></nav></header>
+<main class="container">{% with messages = get_flashed_messages() %}{% if messages %}<div class="flash">{% for m in messages %}<p>{{ m }}</p>{% endfor %}</div>{% endif %}{% endwith %}
+{% block content %}{% endblock %}</main><footer>AutoStock · Vehicle Spare Parts Inventory · DBMS project demo</footer></body></html>
